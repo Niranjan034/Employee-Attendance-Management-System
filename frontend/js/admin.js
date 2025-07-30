@@ -71,7 +71,7 @@ async function loadEmployees() {
       <td>${emp.department || 'N/A'}</td>
       <td>${emp.status}</td>
       <td>
-        <button onclick="editEmployee(${emp.employee_id})">Edit</button>
+        <button onclick="enableInlineEdit(this.closest('tr'))">Edit</button>
         <button style="background-color:red"  onclick="deleteEmployee(${emp.employee_id})">Delete</button>
       </td>
     `;
@@ -440,3 +440,92 @@ function populateMonthAndYearSelectors() {
 }
 
 populateMonthAndYearSelectors();
+
+function enableInlineEdit(row) {
+  const tds = row.querySelectorAll('td');
+  const id = tds[0].innerText;
+  const name = tds[1].innerText;
+  const email = tds[2].innerText;
+  const dept = tds[3].innerText;
+  const status = tds[4].innerText;
+
+  row.dataset.originalName = name;
+  row.dataset.originalEmail = email;
+  row.dataset.originalDept = dept;
+  row.dataset.originalStatus = status;
+
+  tds[1].innerHTML = `<input type="text" value="${name}" />`;
+  tds[2].innerHTML = `<input type="email" value="${email}" />`;
+
+  tds[3].innerHTML = `
+    <select>
+      <option${dept === 'HR' ? ' selected' : ''}>HR</option>
+      <option${dept === 'Technical' ? ' selected' : ''}>Technical</option>
+      <option${dept === 'Sales' ? ' selected' : ''}>Sales</option>
+      <option${dept === 'Marketing' ? ' selected' : ''}>Marketing</option>
+      <option${dept === 'Finance' ? ' selected' : ''}>Finance</option>
+      <option${dept === 'Support' ? ' selected' : ''}>Support</option>
+    </select>
+  `;
+
+  tds[4].innerHTML = `
+    <select>
+      <option${status === 'Active' ? ' selected' : ''}>Active</option>
+      <option${status === 'Inactive' ? ' selected' : ''}>Inactive</option>
+    </select>
+  `;
+
+  tds[5].innerHTML = `
+    <button onclick="saveInlineEdit(this)">Save</button>
+    <button onclick="cancelInlineEdit(this)">Cancel</button>
+  `;
+}
+
+function saveInlineEdit(button) {
+  const row = button.closest('tr');
+  const tds = row.querySelectorAll('td');
+  const id = tds[0].innerText;
+  const updatedName = tds[1].querySelector('input').value;
+  const updatedEmail = tds[2].querySelector('input').value;
+  const updatedDept = tds[3].querySelector('select').value;
+  const updatedStatus = tds[4].querySelector('select').value;
+
+  tds[1].innerText = updatedName;
+  tds[2].innerText = updatedEmail;
+  tds[3].innerText = updatedDept;
+  tds[4].innerText = updatedStatus;
+
+  tds[5].innerHTML = `
+    <button class="edit-btn" onclick="enableInlineEdit(this.closest('tr'))">Edit</button>
+    <button class="delete-btn" onclick="deleteEmployee(${id})">Delete</button>
+  `;
+}
+
+function cancelInlineEdit(button) {
+  loadEmployeeData();
+}
+function cancelInlineEdit(button) {
+  const row = button.closest('tr');
+  const tds = row.querySelectorAll('td');
+
+  const originalName = row.dataset.originalName;
+  const originalEmail = row.dataset.originalEmail;
+  const originalDept = row.dataset.originalDept;
+  const originalStatus = row.dataset.originalStatus;
+  const id = tds[0].innerText;
+
+  tds[1].innerText = originalName;
+  tds[2].innerText = originalEmail;
+  tds[3].innerText = originalDept;
+  tds[4].innerText = originalStatus;
+
+  tds[5].innerHTML = `
+    <button class="edit-btn" onclick="enableInlineEdit(this.closest('tr'))">Edit</button>
+    <button class="delete-btn" onclick="deleteEmployee(${id})">Delete</button>
+  `;
+
+  delete row.dataset.originalName;
+  delete row.dataset.originalEmail;
+  delete row.dataset.originalDept;
+  delete row.dataset.originalStatus;
+}

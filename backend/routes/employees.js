@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
       e.name,
       e.email,
       e.status,
+      e.password,
       e.join_date,
       d.name AS department
     FROM employees e
@@ -28,6 +29,7 @@ router.get('/:id', (req, res) => {
       e.name,
       e.email,
       e.status,
+      e.password,
       DATE_FORMAT(e.join_date, '%d-%m-%Y') AS join_date,
       d.name AS department
     FROM employees e

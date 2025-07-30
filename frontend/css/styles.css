@@ -417,16 +417,6 @@ tbody tr:hover {
   outline: none;
 }
 
-#holidayForm button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #ffffff;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-}
 
 #holidayForm button:hover {
   background-color: #0056b3;
@@ -456,7 +446,16 @@ tbody tr:hover {
 #holidaySection table tbody tr:nth-child(even) {
   background-color: #f8f9fa;
 }
-
+#holidayForm button {
+  padding: 0 10px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 60px;
+}
 
 .dashboard-subheading {
   font-size: 1.25rem;
@@ -486,4 +485,572 @@ tbody tr:hover {
 .holiday-table td {
   padding: 10px;
   border: 1px solid #ddd;
+}
+#employees {
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+#employees h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+#employeeSearch {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#employeeForm {
+  margin-bottom: 2rem;
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
+
+#employeeForm h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #444;
+}
+
+#employeeForm input,
+#employeeForm select {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0.5rem 0;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#employeeForm button {
+  margin-top: 0.8rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#employeeForm button:first-of-type {
+  background-color: #007bff;
+  color: white;
+}
+
+#employeeForm button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+#employeeTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#employeeTable th,
+#employeeTable td {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#employeeTable th {
+  background-color: #f1f1f1;
+  color: #444;
+}
+
+#employeeTable tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+#employeeTable button {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 0.3rem;
+}
+
+#employeeTable .edit-btn {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+#employeeTable .delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+#pagination {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+#pagination button {
+  margin: 0 0.3rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.hidden {
+  display: none !important;
+}
+#holidayManagement {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+#holidayManagement h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+#holidayForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+#holidayForm div {
+  display: flex;
+  flex-direction: column;
+}
+
+#holidayForm label {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #555;
+}
+
+#holidayForm input[type="date"],
+#holidayForm input[type="text"] {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 250px;
+}
+
+#holidayForm button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#holidayForm button:hover {
+  background-color: #0056b3;
+}
+
+#holidayMonth,
+#holidayYear {
+  margin: 1rem 1rem 1.5rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#holidayManagement table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#holidayManagement th,
+#holidayManagement td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#holidayManagement th {
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: 600;
+}
+
+#holidayManagement tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.hidden {
+  display: none !important;
+}
+#attendance {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+#attendance h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+#attendance label {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+#filterEmployee,
+#filterDate {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-right: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#attendanceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#attendanceTable th,
+#attendanceTable td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#attendanceTable th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+  color: #444;
+}
+
+#attendanceTable tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+#attendanceTable td:nth-child(6) {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+#attendanceTable td.status-present {
+  color: green;
+}
+
+#attendanceTable td.status-absent {
+  color: red;
+}
+
+#attendanceTable td.status-late {
+  color: orange;
+}
+
+.hidden {
+  display: none !important;
+}
+#filterDate {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#filterDate:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+#filterDate::-webkit-calendar-picker-indicator {
+  filter: invert(0.4);
+  cursor: pointer;
+}
+#filterEmployee,
+#filterDate {
+  width: 250px;
+  max-width: 100%;
+}
+#reports {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+#reports h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.report-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.report-controls label {
+  font-weight: 500;
+  color: #555;
+  margin-right: 0.5rem;
+}
+
+.report-controls select,
+.report-controls input[type="text"] {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.report-controls select:focus,
+.report-controls input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.report-controls button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.report-controls button:hover {
+  background-color: #218838;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+#reportTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+#reportTable thead {
+  background-color: #f1f1f1;
+}
+
+#reportTable th,
+#reportTable td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+#reportTable th {
+  font-weight: 600;
+  color: #444;
+}
+
+#reportTable tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.wide-table {
+  font-size: 0.95rem;
+}
+
+#reportSearch {
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+.hidden {
+  display: none !important;
+}
+#leave {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+#leave h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+#toggleLeaveFormBtn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#toggleLeaveFormBtn:hover {
+  background-color: #0056b3;
+}
+
+#leaveForm {
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: flex-end;
+}
+
+#leaveForm label {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.4rem;
+}
+
+#leaveForm input[type="date"],
+#leaveForm input[type="text"] {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 250px;
+}
+
+#leaveForm button {
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#leaveForm button:hover {
+  background-color: #218838;
+}
+
+#leave h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+#leave table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#leave th,
+#leave td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#leave th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+  color: #444;
+}
+
+#leave tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+#leave td.status-approved {
+  color: green;
+  font-weight: 500;
+}
+
+#leave td.status-rejected {
+  color: red;
+  font-weight: 500;
+}
+
+#leave td.status-pending {
+  color: #f39c12;
+  font-weight: 500;
+}
+
+.hidden {
+  display: none !important;
+}
+#leave input[type="date"] {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 250px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#leave input[type="date"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+#leave input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
 }
