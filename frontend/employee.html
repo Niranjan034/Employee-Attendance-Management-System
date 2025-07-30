@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  
+</head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Employee</h2>
+      <ul>
+        <li onclick="showSection('dashboard')" class="active">Dashboard</li>
+        <li onclick="showSection('attendance')">Attendance</li>
+        <li onclick="showSection('history')">History</li>
+        <li onclick="showSection('leave')">Leave</li>
+        <li onclick="showSection('profile')">Profile</li>
+      </ul>
+      <div class="logout" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="main">
+      <div id="dashboard" class="section">
+        <h1>Welcome, <span id="empName">Employee</span></h1>
+        <div class="cards">
+          <div class="card">
+            <h3>Days Present</h3><span id="daysPresent">0</span>
+          </div>
+          <div class="card">
+            <h3>Leaves Taken</h3><span id="leavesTaken">0</span>
+          </div>
+          <div class="card">
+            <h3>Late Entries</h3><span id="lateEntries">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="attendance" class="section hidden">
+        <h1>Mark Attendance</h1>
+
+        <!-- Live Clock -->
+        <div id="liveClock" class="clock"></div>
+
+        <!-- Attendance Status Message -->
+        <div id="attendanceStatus"></div>
+
+        <!-- Buttons -->
+        <button id="checkInBtn" onclick="markAttendance('checkin')">Check In</button>
+        <button id="checkOutBtn" onclick="markAttendance('checkout')" class="hidden">Check Out</button>
+
+        <!-- Display Check-In Time -->
+        <div id="checkinTimeDisplay" class="time-display hidden"></div>
+      </div>
+
+
+      <div id="history" class="section hidden">
+        <h1>Attendance History</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+      </div>
+
+      <div id="leave" class="section hidden">
+        <h1>Leave Requests</h1>
+
+        <!-- Toggle button -->
+        <button id="toggleLeaveFormBtn" onclick="toggleLeaveForm()">Apply for Leave</button>
+
+        <!-- Leave Form (Initially Hidden) -->
+        <div id="leaveForm" class="form-box hidden">
+          <label>From:</label>
+          <input type="date" id="leaveFrom" />
+
+          <label>To:</label>
+          <input type="date" id="leaveTo" />
+
+          <label>Reason:</label>
+          <input type="text" id="leaveReason" placeholder="Enter your reason here" />
+
+          <button onclick="applyLeave()">Submit</button>
+        </div>
+
+        <h2>Your Requests</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="leaveTable"></tbody>
+        </table>
+      </div>
+
+
+      <div id="profile" class="section hidden">
+        <h1>Profile</h1>
+        <div class="profile-box" id="profileBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/employee.js"></script>
+</body>
+
+</html>

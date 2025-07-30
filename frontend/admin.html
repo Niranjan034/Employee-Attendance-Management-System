@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Gradious</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Gradious</h2>
+      <ul>
+        <li data-section="dashboard" onclick="showSection('dashboard')">Dashboard</li>
+        <li data-section="employees" onclick="showSection('employees')">Employees</li>
+        <li data-section="attendance" onclick="showSection('attendance')">Attendance</li>
+        <li data-section="reports" onclick="showSection('reports')">Reports</li>
+        <li data-section="leaveRequests" onclick="showSection('leaveRequests')">Leave Requests</li>
+      </ul>
+      <div class="logout" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="main">
+
+      <div id="dashboard" class="section">
+        <h1>Admin Dashboard</h1>
+        <div class="cards">
+          <div class="card">
+            <h3>Total Employees</h3><span>0</span>
+          </div>
+          <div class="card">
+            <h3>Present Today</h3><span>0</span>
+          </div>
+          <div class="card">
+            <h3>Half Days Today</h3><span>0</span>
+          </div>
+          <div class="card">
+            <h3>Pending Leaves</h3><span>0</span>
+          </div>
+        </div>
+        <div class="table-box">
+          <h3>Department-wise Attendance Summary</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Total Employees</th>
+                <th>Present</th>
+                <th>Half-Day</th>
+              </tr>
+            </thead>
+            <tbody id="departmentSummaryTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="employees" class="section hidden">
+        <h1>Manage Employees</h1>
+        <input type="text" id="employeeSearch" placeholder="Search by name or email" onkeyup="filterEmployeeTable()" />
+        <div id="employeeForm" class="hidden">
+          <h3 id="formTitle">Add Employee</h3>
+          <input type="hidden" id="empId" />
+          <input type="text" id="empName" placeholder="Name" required />
+          <input type="email" id="empEmail" placeholder="Email" required />
+          <input type="text" id="empPassword" placeholder="Password" required />
+          <select id="empDept">
+            <option value="1">HR</option>
+            <option value="2">Technical</option>
+            <option value="3">Sales</option>
+            <option value="4">Marketing</option>
+            <option value="5">Finance</option>
+            <option value="6">Support</option>
+          </select>
+          <select id="empStatus">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+          <button onclick="submitEmployeeForm()">Save</button>
+          <button onclick="closeForm()">Cancel</button>
+        </div>
+
+        <button onclick="openAddEmployeeForm()">Add Employee</button>
+        <table id="employeeTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="pagination"></div>
+
+      </div>
+
+      <div id="attendance" class="section hidden">
+        <h1>Attendance Records</h1>
+        <label>Filter by Employee:</label>
+        <select id="filterEmployee" onchange="loadAttendance()"></select>
+
+        <label>Filter by Date:</label>
+        <input type="date" id="filterDate" onchange="loadAttendance()" />
+
+        <table id="attendanceTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Date</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+      </div>
+
+      <div id="reports" class="section hidden">
+        <h1>Attendance Report</h1>
+
+        <div class="report-controls">
+          <button onclick="exportTableToExcel('reportTable')">Export to Excel</button>
+
+          <input type="text" id="reportSearch" placeholder="Search by employee name..." onkeyup="filterReportTable()" />
+
+          <label for="reportMonth">Select Month:</label>
+          <select id="reportMonth" onchange="loadReport()">
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+
+          <label for="reportYear">Select Year:</label>
+          <select id="reportYear" onchange="loadReport()">
+          </select>
+
+          <label for="reportDepartment">Select Department:</label>
+          <select id="reportDepartment" onchange="loadReport()">
+            <option value="">All Departments</option>
+            <option value="Finance">Finance</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Sales">Sales</option>
+            <option value="Support">Support</option>
+            <option value="Technical">Technical</option>
+          </select>
+
+        </div>
+
+        <div class="table-responsive">
+          <table id="reportTable" class="wide-table">
+            <thead id="reportTableHead"></thead>
+            <tbody id="reportTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="leaveRequests" class="section hidden">
+        <h1>Leave Requests</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="leaveRequestsTable"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+
+  <script src="js/admin.js"></script>
+</body>
+
+</html>

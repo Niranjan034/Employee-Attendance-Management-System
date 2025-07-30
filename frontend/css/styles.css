@@ -1,0 +1,352 @@
+/* === Reset & Base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f8fafc;
+  color: #2c3e50;
+}
+
+/* === Utility === */
+.hidden {
+  display: none !important;
+}
+
+/* === Container Layouts === */
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+  background-color: #f8fafd;
+}
+
+/* === Sidebar === */
+.sidebar {
+  width: 250px;
+  background-color: #2f3e59;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #ffffff;
+}
+
+.sidebar ul {
+  list-style: none;
+  flex-grow: 1;
+}
+
+.sidebar ul li {
+  background: #3e506e;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active {
+  background-color: #516789;
+  font-weight: bold;
+}
+
+.logout {
+  background-color: #e74c3c;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background-color: #c0392b;
+}
+
+/* === Cards === */
+.cards,
+.card-container {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.card {
+  flex: 1;
+  min-width: 180px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.card span {
+  font-size: 26px;
+  color: #3498db;
+  font-weight: 600;
+}
+
+/* === Buttons === */
+button,
+.btn {
+  padding: 10px 18px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover,
+.btn:hover {
+  background-color: #2d82c1;
+}
+
+button.danger {
+  background-color: #e74c3c;
+}
+
+button.danger:hover {
+  background-color: #c0392b;
+}
+
+/* === Forms === */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* === Tables === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+  background-color: #2f3e59;
+  color: white;
+}
+
+th,
+td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+tbody tr:hover {
+  background-color: #f2f4f7;
+}
+
+/* === Attendance Status === */
+#attendanceStatus {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #e0f7ff;
+  color: #015a7a;
+  border-left: 5px solid #3498db;
+  border-radius: 10px;
+}
+
+/* === Profile Box === */
+.profile-box,
+#profileBox {
+  background-color: white;
+  padding: 24px;
+  margin-top: 20px;
+  border-left: 5px solid #3498db;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* === Login Page === */
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.login-left {
+  flex: 1;
+  background: linear-gradient(to bottom right, #2f3e59, #3c5474);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+}
+
+.login-form h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #2f3e59;
+}
+
+.login-form h3 {
+  margin-bottom: 25px;
+  font-weight: 400;
+  color: #666;
+}
+
+.forgot-link {
+  display: block;
+  text-align: right;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* === Clock === */
+#liveClock {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* === Modal === */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow-x: auto;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sidebar ul li {
+    margin: 0 8px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .main {
+    padding: 20px;
+  }
+
+  .cards,
+  .card-container {
+    flex-direction: column;
+  }
+
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    flex: 1;
+    padding: 20px;
+  }
+}
