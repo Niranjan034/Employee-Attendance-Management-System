@@ -135,7 +135,7 @@ router.get('/report/monthly', async (req, res) => {
   const startDate = `${year}-${month.padStart(2, '0')}-01`;
   const endDate = `${year}-${month.padStart(2, '0')}-${daysInMonth.toString().padStart(2, '0')}`;
 
-  let query = `
+  let attendanceQuery = `
     SELECT e.employee_id, e.name AS employee_name, d.name AS department_name, a.date, a.status
     FROM employees e
     LEFT JOIN departments d ON e.department_id = d.department_id
@@ -147,33 +147,51 @@ router.get('/report/monthly', async (req, res) => {
   const params = [startDate, endDate];
 
   if (department) {
-    query += ` WHERE d.name = ?`;
+    attendanceQuery += ` WHERE d.name = ?`;
     params.push(department);
   }
 
   try {
-    db.query(query, params, (err, results) => {
+    db.query(attendanceQuery, params, (err, results) => {
       if (err) return res.status(500).json({ message: 'DB error', err });
 
-      const report = {};
-      results.forEach(row => {
-        if (!report[row.employee_id]) {
-          report[row.employee_id] = {
-            employee_id: row.employee_id,
-            name: row.employee_name,
-            department: row.department_name,
-            attendance: Array(daysInMonth).fill('Leave'),
-          };
-        }
+      const holidaysQuery = `SELECT date FROM holidays WHERE date BETWEEN ? AND ?`;
+      db.query(holidaysQuery, [startDate, endDate], (holidayErr, holidayResults) => {
+        if (holidayErr) return res.status(500).json({ message: 'Holiday query error', err: holidayErr });
 
-        if (row.date && row.status) {
-          const day = new Date(row.date).getDate();
-          report[row.employee_id].attendance[day - 1] = row.status;
-        }
+        const holidayMap = new Set(holidayResults.map(row => row.date.toISOString().split('T')[0]));
+
+        const report = {};
+        results.forEach(row => {
+          if (!report[row.employee_id]) {
+            report[row.employee_id] = {
+              employee_id: row.employee_id,
+              name: row.employee_name,
+              department: row.department_name,
+              attendance: Array(daysInMonth).fill('Leave'),
+            };
+          }
+
+          if (row.date && row.status) {
+            const day = new Date(row.date).getDate();
+            report[row.employee_id].attendance[day - 1] = row.status;
+          }
+        });
+
+        Object.values(report).forEach(emp => {
+          for (let i = 0; i < daysInMonth; i++) {
+            const dateStr = `${year}-${month.padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`;
+            if (holidayMap.has(dateStr) && emp.attendance[i] === 'Leave') {
+              emp.attendance[i] = 'Holiday';
+            }
+          }
+        });
+
+        const dateHeaders = Array.from({ length: daysInMonth }, (_, i) => String(i + 1).padStart(2, '0'));
+
+        const formattedData = Object.values(report);
+        res.json({ daysInMonth, dateHeaders, data: formattedData });
       });
-
-      const formattedData = Object.values(report);
-      res.json({ daysInMonth, data: formattedData });
     });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error });

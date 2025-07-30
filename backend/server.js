@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+const holidayRoutes = require('./routes/holidays');
+app.use('/api', holidayRoutes);
 
 const employeeRoutes = require('./routes/employees');
 app.use('/api/employees', employeeRoutes);

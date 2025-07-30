@@ -34,10 +34,16 @@ function isAfterWorkingHours() {
 }
 
 async function markAttendance(type) {
+  if (await isTodayHoliday()) {
+    alert('Today is a holiday. Attendance cannot be marked.');
+    return;
+  }
+
   if (type === 'checkin' && !isWithinWorkingHours()) {
     alert('Check-in is allowed only between 9 AM and 6 PM');
     return;
   }
+
   if (type === 'checkout' && isAfterWorkingHours()) {
     alert('Check-out is not allowed after 6 PM');
     return;
@@ -53,6 +59,7 @@ async function markAttendance(type) {
   alert(data.message);
   loadTodayAttendance();
 }
+
 
 async function loadTodayAttendance() {
   const res = await fetch(`http://localhost:5000/api/attendance/today/${userId}`);
@@ -178,3 +185,83 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
+function generateEmployeeHolidayDropdowns() {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear();
+
+  const monthSelect = document.getElementById('empHolidayMonth');
+  const yearSelect = document.getElementById('empHolidayYear');
+
+  for (let m = 1; m <= 12; m++) {
+    const option = document.createElement('option');
+    option.value = m.toString().padStart(2, '0');
+    option.textContent = new Date(0, m - 1).toLocaleString('en-IN', { month: 'long' });
+    if (m === currentMonth) option.selected = true;
+    monthSelect.appendChild(option);
+  }
+
+  for (let y = currentYear; y <= currentYear + 2; y++) {
+    const option = document.createElement('option');
+    option.value = y;
+    option.textContent = y;
+    if (y === currentYear) option.selected = true;
+    yearSelect.appendChild(option);
+  }
+}
+
+async function loadEmployeeHolidays() {
+  const month = document.getElementById('empHolidayMonth')?.value;
+  const year = document.getElementById('empHolidayYear')?.value;
+
+  try {
+    const url = `http://localhost:5000/api/holidays?month=${month}&year=${year}`;
+    const res = await fetch(url);
+    const holidays = await res.json();
+
+    const tableBody = document.getElementById('empHolidayTableBody');
+    tableBody.innerHTML = '';
+
+    if (!Array.isArray(holidays) || holidays.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="2">No holidays for this month.</td></tr>`;
+      return;
+    }
+
+    holidays.forEach(holiday => {
+      const holidayDate = new Date(holiday.date).toLocaleDateString('en-IN');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${holidayDate}</td>
+        <td>${holiday.name}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  } catch (err) {
+    console.error('Error loading holidays:', err);
+    document.getElementById('empHolidayTableBody').innerHTML = `<tr><td colspan="2">Failed to load holidays</td></tr>`;
+  }
+}
+
+// Run on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  generateEmployeeHolidayDropdowns();
+
+  document.getElementById('empHolidayMonth')?.addEventListener('change', loadEmployeeHolidays);
+  document.getElementById('empHolidayYear')?.addEventListener('change', loadEmployeeHolidays);
+
+  loadEmployeeHolidays();
+});
+async function isTodayHoliday() {
+  try {
+    const res = await fetch('http://localhost:5000/api/holidays');
+    const holidays = await res.json();
+    const todayStr = new Date().toISOString().split('T')[0];
+    return holidays.some(holiday => {
+      const holidayDate = new Date(holiday.date).toISOString().split('T')[0];
+      return holidayDate === todayStr;
+    });
+  } catch (err) {
+    console.error('Error checking holiday:', err);
+    return false;
+  }
+}

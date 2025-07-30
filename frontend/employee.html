@@ -5,13 +5,13 @@
   <meta charset="UTF-8" />
   <title>Employee Dashboard</title>
   <link rel="stylesheet" href="css/styles.css" />
-  
+
 </head>
 
 <body>
   <div class="container">
     <div class="sidebar">
-      <h2>Employee</h2>
+      <h2>Gradious</h2>
       <ul>
         <li onclick="showSection('dashboard')" class="active">Dashboard</li>
         <li onclick="showSection('attendance')">Attendance</li>
@@ -36,22 +36,40 @@
             <h3>Late Entries</h3><span id="lateEntries">0</span>
           </div>
         </div>
+        <div class="dashboard-subsection" id="employeeHolidayView">
+          <h2 class="dashboard-subheading">Holiday Calendar</h2>
+
+          <div class="holiday-filter">
+            <label for="empHolidayMonth">Month:</label>
+            <select id="empHolidayMonth"></select>
+
+            <label for="empHolidayYear">Year:</label>
+            <select id="empHolidayYear"></select>
+          </div>
+
+          <table class="table table-bordered holiday-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Holiday</th>
+              </tr>
+            </thead>
+            <tbody id="empHolidayTableBody">
+              <tr>
+                <td colspan="2">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
 
       <div id="attendance" class="section hidden">
         <h1>Mark Attendance</h1>
-
-        <!-- Live Clock -->
         <div id="liveClock" class="clock"></div>
-
-        <!-- Attendance Status Message -->
         <div id="attendanceStatus"></div>
-
-        <!-- Buttons -->
         <button id="checkInBtn" onclick="markAttendance('checkin')">Check In</button>
         <button id="checkOutBtn" onclick="markAttendance('checkout')" class="hidden">Check Out</button>
-
-        <!-- Display Check-In Time -->
         <div id="checkinTimeDisplay" class="time-display hidden"></div>
       </div>
 
@@ -73,11 +91,7 @@
 
       <div id="leave" class="section hidden">
         <h1>Leave Requests</h1>
-
-        <!-- Toggle button -->
         <button id="toggleLeaveFormBtn" onclick="toggleLeaveForm()">Apply for Leave</button>
-
-        <!-- Leave Form (Initially Hidden) -->
         <div id="leaveForm" class="form-box hidden">
           <label>From:</label>
           <input type="date" id="leaveFrom" />

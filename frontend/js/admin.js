@@ -1,6 +1,8 @@
 if (localStorage.getItem('role') !== 'admin') {
   window.location.href = 'index.html';
 }
+document.getElementById('holidayMonth')?.addEventListener('change', loadHolidays);
+document.getElementById('holidayYear')?.addEventListener('change', loadHolidays);
 
 function showSection(sectionId) {
   document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
@@ -280,13 +282,9 @@ async function loadReport() {
 
   try {
     const res = await fetch(url);
-    const { daysInMonth, data } = await res.json();
+    const { daysInMonth, dateHeaders, data } = await res.json();
 
-    // Generate Table Head
-    const headRow = ['Employee ID','Employee Name', 'Department'];
-    for (let i = 1; i <= daysInMonth; i++) {
-      headRow.push(`Day ${i}`);
-    }
+    const headRow = ['Employee ID', 'Employee Name', 'Department', ...dateHeaders];
 
     const thead = document.getElementById('reportTableHead');
     const tbody = document.getElementById('reportTableBody');
@@ -301,12 +299,18 @@ async function loadReport() {
     });
     thead.appendChild(trHead);
 
-    // Table Body
     data.forEach(emp => {
       const tr = document.createElement('tr');
       tr.innerHTML += `<td>${emp.employee_id}</td><td>${emp.name}</td><td>${emp.department}</td>`;
       emp.attendance.forEach(status => {
-        tr.innerHTML += `<td>${status}</td>`;
+        const td = document.createElement('td');
+        td.textContent = status;
+
+        if (status === 'Holiday') {
+          td.classList.add('holiday');
+        }
+
+        tr.appendChild(td);
       });
       tbody.appendChild(tr);
     });
@@ -316,6 +320,7 @@ async function loadReport() {
     alert('Failed to load report. Please check the backend.');
   }
 }
+
 
 function exportTableToExcel(tableID = 'reportTable', filename = '') {
   const table = document.getElementById(tableID);
@@ -343,7 +348,6 @@ function filterReportTable() {
   });
 }
 
-// Initialize year options
 function populateReportYears() {
   const yearSelect = document.getElementById('reportYear');
   const currentYear = new Date().getFullYear();
@@ -356,3 +360,83 @@ function populateReportYears() {
   yearSelect.value = currentYear;
 }
 populateReportYears();
+async function loadHolidays() {
+  const month = document.getElementById('holidayMonth')?.value;
+  const year = document.getElementById('holidayYear')?.value;
+
+  if (!month || !year) return;
+
+  try {
+    const url = `http://localhost:5000/api/holidays?month=${month.padStart(2, '0')}&year=${year}`;
+    const res = await fetch(url);
+    const holidays = await res.json();
+
+    const holidayTableBody = document.getElementById('holidayTableBody');
+    holidayTableBody.innerHTML = '';
+
+    if (!Array.isArray(holidays) || holidays.length === 0) {
+      holidayTableBody.innerHTML = `<tr><td colspan="2">No holidays for this month.</td></tr>`;
+      return;
+    }
+
+    holidays.forEach(holiday => {
+      const holidayDate = new Date(holiday.date);
+      const formattedDate = holidayDate.toLocaleDateString('en-IN');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${formattedDate}</td>
+        <td>${holiday.name}</td>
+      `;
+      holidayTableBody.appendChild(tr);
+    });
+  } catch (err) {
+    console.error('Failed to load holidays:', err);
+    const holidayTableBody = document.getElementById('holidayTableBody');
+    holidayTableBody.innerHTML = `<tr><td colspan="2">Error loading holidays.</td></tr>`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const monthSelect = document.getElementById('holidayMonth');
+  const yearSelect = document.getElementById('holidayYear');
+
+  if (monthSelect && yearSelect) {
+    monthSelect.addEventListener('change', loadHolidays);
+    yearSelect.addEventListener('change', loadHolidays);
+  }
+
+  loadHolidays();
+});
+
+function populateMonthAndYearSelectors() {
+  const monthSelect = document.getElementById('holidayMonth');
+  const yearSelect = document.getElementById('holidayYear');
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  for (let i = currentMonth; i < 12; i++) {
+    const option = document.createElement('option');
+    option.value = String(i + 1).padStart(2, '0');
+    option.textContent = monthNames[i];
+    monthSelect.appendChild(option);
+  }
+
+  for (let y = currentYear; y <= currentYear + 2; y++) {
+    const option = document.createElement('option');
+    option.value = y;
+    option.textContent = y;
+    yearSelect.appendChild(option);
+  }
+
+  monthSelect.value = String(currentMonth + 1).padStart(2, '0');
+  yearSelect.value = currentYear;
+}
+
+populateMonthAndYearSelectors();
